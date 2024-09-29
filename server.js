@@ -9,14 +9,12 @@ const port = 3001;
 const uri = process.env.MONGO_URI;
 const dbName = 'ordersDB';
 
-// CORS setup to allow localhost and Vercel domain
 app.use(cors({
-    origin: ["http://127.0.0.1:5500", "https://your-vercel-app-url.vercel.app"],
+    origin: ["http://127.0.0.1:5500","http://127.0.0.1:5501", "https://your-vercel-app-url.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
 }));
 
-// Headers to allow cross-origin requests
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -24,15 +22,12 @@ app.use(function (req, res, next) {
     next();
 });
 
-// Body parser setup
 app.use(bodyParser.json());
 
-// Test route to check if server is working
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-// Route to submit an order to MongoDB
 app.post('/submit-order', async (req, res) => {
     const orderData = req.body;
     try {
@@ -56,7 +51,6 @@ app.post('/submit-order', async (req, res) => {
     }
 });
 
-// Route to get all orders from MongoDB (for admin)
 app.get('/admin/orders', async (req, res) => {
     try {
         const client = new MongoClient(uri);
@@ -76,7 +70,6 @@ app.get('/admin/orders', async (req, res) => {
     }
 });
 
-// Start the server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
