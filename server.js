@@ -1,33 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
-<<<<<<< HEAD
-const cors = require('cors'); 
-=======
 const cors = require('cors');
 require('dotenv').config(); // Load environment variables from .env file
->>>>>>> f5772de6cd5362b998e44cab096a0f3f1cd65f80
 
 const app = express();
 const port = 5500;
 
 // MongoDB connection URI and database name
-<<<<<<< HEAD
-const uri = "mongodb+srv://agokulraj2003:PxxM57AYI5yG4mku@gokulraj.o9kty.mongodb.net/?retryWrites=true&w=majority&appName=Gokulraj"; // Make sure your MongoDB is running on this address
-=======
 const uri = process.env.MONGO_URI; // Use the MongoDB URI from the .env file
->>>>>>> f5772de6cd5362b998e44cab096a0f3f1cd65f80
 const dbName = 'ordersDB';
 
 // Enable CORS for specified origins
 app.use(cors({
-<<<<<<< HEAD
     origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://127.0.0.1:5501'], // Added your origin
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Allow all HTTP methods
-=======
+
     origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
->>>>>>> f5772de6cd5362b998e44cab096a0f3f1cd65f80
 }));
 
 app.use(bodyParser.json());
