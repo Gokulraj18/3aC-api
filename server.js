@@ -12,16 +12,24 @@ const uri = process.env.MONGO_URI; // Use the MongoDB URI from the .env file
 const dbName = 'ordersDB';
 
 // Enable CORS for specified origins
-app.use(cors({
-    origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'http://127.0.0.1:5501'], // Added your origin
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Allow all HTTP methods
 
-    origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+app.use(cors({
+    origin: ["http://127.0.0.1:5500/"],
+    methods: ["POST", "GET"],
+    credentials: true
 }));
 
-app.use(bodyParser.json());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500/");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+  });
 
+app.use(bodyParser.json());
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
 // Endpoint to submit an order
 app.post('/submit-order', async (req, res) => {
     const orderData = req.body;
@@ -48,7 +56,6 @@ app.post('/submit-order', async (req, res) => {
     }
 });
 
-// Endpoint to get all orders for admin
 app.get('/admin/orders', async (req, res) => {
     try {
         const client = new MongoClient(uri);
