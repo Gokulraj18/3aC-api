@@ -11,7 +11,7 @@ const dbName = 'ordersDB';
 
 // CORS configuration
 app.use(cors({
-    origin: ["http://127.0.0.1:5500", "http://127.0.0.1:5501", "https://3a-c-api.vercel.app","https://3-a-crackers.vercel.app"],
+    origin: ["https://3a-c-api.vercel.app","https://3-a-crackers.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
 }));
@@ -43,7 +43,7 @@ app.post('/submit-order', async (req, res) => {
         const result = await ordersCollection.insertOne(orderData);
 
         res.json({
-            message: 'Order received and inserted into MongoDB successfully!',
+            message: ' ☺︎ Order received successfully Happy wishes from 3A Crackers!',
             orderId: result.insertedId,
         });
 
