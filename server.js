@@ -11,7 +11,7 @@ const dbName = 'ordersDB';
 
 // CORS configuration
 app.use(cors({
-    origin: ["http://127.0.0.1:5500", "http://127.0.0.1:5501", "https://3a-c-api.vercel.app"],
+    origin: ["http://127.0.0.1:5500", "http://127.0.0.1:5501", "https://3a-c-api.vercel.app","https://3-a-crackers.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
 }));
