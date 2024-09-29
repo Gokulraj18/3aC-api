@@ -2,16 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
 const cors = require('cors');
-require('dotenv').config(); // Load environment variables from .env file
-
+require('dotenv').config();
 const app = express();
 const port = 5500;
-
-// MongoDB connection URI and database name
-const uri = process.env.MONGO_URI; // Use the MongoDB URI from the .env file
+const uri = process.env.MONGO_URI; 
 const dbName = 'ordersDB';
-
-// Enable CORS for specified origins
 
 app.use(cors({
     origin: ["http://127.0.0.1:5500/"],
@@ -30,11 +25,8 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
-// Endpoint to submit an order
 app.post('/submit-order', async (req, res) => {
     const orderData = req.body;
-
-    // Connect to MongoDB and insert order
     try {
         const client = new MongoClient(uri);
         await client.connect();
@@ -74,8 +66,6 @@ app.get('/admin/orders', async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch orders' });
     }
 });
-
-// Start the server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
