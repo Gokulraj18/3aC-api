@@ -5,23 +5,26 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001; // Use environment variable or default to 3001
 const uri = process.env.MONGO_URI;
 const dbName = 'ordersDB';
 
+// CORS configuration
 app.use(cors({
-    origin: ["http://127.0.0.1:5500","http://127.0.0.1:5501", "https://your-vercel-app-url.vercel.app"],
+    origin: ["http://127.0.0.1:5500", "http://127.0.0.1:5501", "https://your-vercel-app-url.vercel.app"],
     methods: ["POST", "GET"],
     credentials: true
 }));
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
+// Preflight request handling
+app.options('*', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Credentials", "true");
-    next();
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.sendStatus(200);
 });
 
+// Middleware to parse JSON
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
